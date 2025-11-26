@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace rattrapageB4.Data.Models
+namespace rattrapageB4.Models
 {
     public class Appointment
     {
@@ -8,7 +8,6 @@ namespace rattrapageB4.Data.Models
 
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
-
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
 

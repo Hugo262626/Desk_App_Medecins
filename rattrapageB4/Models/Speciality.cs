@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace rattrapageB4.Data.Models
+namespace rattrapageB4.Models
 {
     public class Speciality
     {
