@@ -1,35 +1,83 @@
 ﻿<Window x:Class="rattrapageB4.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Clinic - Menu Principal" Height="400" Width="400"
+        Title="Clinic - Agenda" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <!-- RDV -->
+            <ColumnDefinition Width="250"/>
+            <!-- boutons -->
+        </Grid.ColumnDefinitions>
 
-    <Grid Background="#f0f0f0" Margin="20">
+        <!-- Partie gauche : filtres + DataGrid RDV -->
+        <DockPanel Grid.Column="0" Margin="0,0,10,0">
+            <!-- Filtres -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,10">
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Médecin" FontWeight="SemiBold"/>
+                    <ComboBox x:Name="cboDoctor" Width="200" DisplayMemberPath="FullName"/>
+                </StackPanel>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Patient" FontWeight="SemiBold"/>
+                    <ComboBox x:Name="cboPatient" Width="200" DisplayMemberPath="FullName"/>
+                </StackPanel>
 
-        <!-- Titre -->
-        <TextBlock Text="Menu Principal"
-                   FontSize="26" 
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="0 10"/>
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Du" FontWeight="SemiBold"/>
+                    <DatePicker x:Name="dpFrom" Width="140"/>
+                </StackPanel>
 
-        <!-- Boutons -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Au" FontWeight="SemiBold"/>
+                    <DatePicker x:Name="dpTo" Width="140"/>
+                </StackPanel>
 
-            <Button Content="Patients" Height="40" Margin="0 10" Click="BtnPatients_Click"/>
+                <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+                    <Button x:Name="btnFilter" Content="Filtrer" Width="80" Margin="5,0" Click="BtnFilter_Click"/>
+                    <Button x:Name="btnClear" Content="Réinitialiser" Width="100" Margin="5,0" Click="BtnClear_Click"/>
+                    <Button x:Name="btnHistory" Content="Afficher historique" Width="130" Margin="5,0" Click="BtnHistory_Click"/>
+                </StackPanel>
+            </StackPanel>
 
-            <Button Content="Médecins" Height="40" Margin="0 10" Click="BtnDoctors_Click"/>
+            <!-- DataGrid -->
+            <DataGrid x:Name="dgAppointments"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      MouseDoubleClick="DgAppointments_MouseDoubleClick"
+                      SelectionMode="Single"
+                      DockPanel.Dock="Top">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Binding="{Binding StartAt, StringFormat=d}" Width="90"/>
+                    <DataGridTextColumn Header="Heure début" Binding="{Binding StartAt, StringFormat=HH\\:mm}" Width="80"/>
+                    <DataGridTextColumn Header="Heure fin" Binding="{Binding EndAt, StringFormat=HH\\:mm}" Width="80"/>
+                    <DataGridTextColumn Header="Médecin" Binding="{Binding DoctorName}" Width="180"/>
+                    <DataGridTextColumn Header="Patient" Binding="{Binding PatientName}" Width="180"/>
+                    <DataGridTextColumn Header="Infos" Binding="{Binding ShortNotes}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
 
-            <Button Content="Spécialités" Height="40" Margin="0 10" Click="BtnSpecialities_Click"/>
+        <!-- Partie droite : boutons CRUD -->
+        <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <TextBlock Text="Actions" FontSize="16" FontWeight="Bold" Margin="10"/>
+            <Button Content="Patients" Height="40" Margin="10" Click="BtnPatients_Click"/>
+            <Button Content="Médecins" Height="40" Margin="10" Click="BtnDoctors_Click"/>
+            <Button Content="Spécialités" Height="40" Margin="10" Click="BtnSpecialities_Click"/>
 
-            <Button Content="Rendez-vous" Height="40" Margin="0 10" Click="BtnAppointments_Click"/>
+            <Separator Margin="10"/>
 
+            <Button Content="Ajouter RDV" Height="40" Margin="10" Click="BtnAddAppointment_Click"/>
+            <Button Content="Modifier RDV" Height="40" Margin="10" Click="BtnEditAppointment_Click"/>
+            <Button Content="Supprimer RDV" Height="40" Margin="10" Click="BtnDeleteAppointment_Click"/>
+
+            <Separator Margin="10"/>
+
+            <Button Content="Refresh" Height="32" Margin="10" Click="BtnRefresh_Click"/>
+            <TextBlock Text="(Double-clic sur un RDV pour voir détails)" Margin="10" TextWrapping="Wrap"/>
         </StackPanel>
-
     </Grid>
 </Window>

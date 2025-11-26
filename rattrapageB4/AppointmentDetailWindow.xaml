@@ -1,0 +1,27 @@
+﻿<Window x:Class="rattrapageB4.AppointmentDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Détail rendez-vous" Height="320" Width="480" WindowStartupLocation="CenterOwner">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock x:Name="txtTitle" FontSize="18" FontWeight="Bold" Margin="0,0,0,8"/>
+            <TextBlock x:Name="txtDoctor" Margin="0,0,0,4"/>
+            <TextBlock x:Name="txtPatient" Margin="0,0,0,4"/>
+            <TextBlock x:Name="txtTime" Margin="0,0,0,4"/>
+        </StackPanel>
+
+        <GroupBox Header="Informations complémentaires" Grid.Row="1" Margin="0,10,0,10">
+            <ScrollViewer>
+                <TextBlock x:Name="txtNotes" TextWrapping="Wrap"/>
+            </ScrollViewer>
+        </GroupBox>
+
+        <Button Grid.Row="2" Content="Fermer" HorizontalAlignment="Right" Width="80" Click="BtnClose_Click"/>
+    </Grid>
+</Window>

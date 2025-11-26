@@ -14,7 +14,7 @@ namespace rattrapageB4
         // Configurer la base ici
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "Server=localhost;Database=re;User=root;Password=mysql;";
+            string connectionString = "Server=localhost;Database=clinic;User=root;Password=mysql;";
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
