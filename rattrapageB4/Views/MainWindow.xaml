@@ -1,4 +1,4 @@
-﻿<Window x:Class="rattrapageB4.MainWindow"
+﻿<Window x:Class="rattrapageB4.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Clinic - Agenda" Height="600" Width="1000"

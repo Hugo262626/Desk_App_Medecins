@@ -1,4 +1,4 @@
-﻿<Window x:Class="rattrapageB4.AppointmentDetailWindow"
+﻿<Window x:Class="rattrapageB4.Views.AppointmentDetailWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Détail rendez-vous" Height="320" Width="480" WindowStartupLocation="CenterOwner">

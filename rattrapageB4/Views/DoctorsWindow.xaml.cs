@@ -3,7 +3,7 @@ using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using rattrapageB4.Models;
 
-namespace rattrapageB4
+namespace rattrapageB4.Views
 {
     public partial class DoctorsWindow : Window
     {

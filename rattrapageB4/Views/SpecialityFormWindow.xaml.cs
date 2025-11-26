@@ -2,7 +2,7 @@
 using System.Windows;
 using rattrapageB4.Models;
 
-namespace rattrapageB4
+namespace rattrapageB4.Views
 {
     public partial class SpecialityFormWindow : Window
     {

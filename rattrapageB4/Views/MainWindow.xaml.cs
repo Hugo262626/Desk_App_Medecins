@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using Microsoft.EntityFrameworkCore;
 using rattrapageB4.Models; // <- tes modèles Doctor, Patient, Appointment, Speciality
 
-namespace rattrapageB4
+namespace rattrapageB4.Views
 {
     public partial class MainWindow : Window
     {
