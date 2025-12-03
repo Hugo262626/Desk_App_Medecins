@@ -136,7 +136,11 @@ namespace rattrapageB4.Views
         }
 
         // BOUTONS CRUD (placeholders)
-        private void BtnPatients_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Ouvrir fenêtre Patients...");
+        private void BtnPatients_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Views.PatientWindow();
+            win.ShowDialog();
+        }
         private void BtnDoctors_Click(object sender, RoutedEventArgs e)
         {
             var doctorsWindow = new DoctorsWindow();
