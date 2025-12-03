@@ -34,10 +34,11 @@
             <Label Content="Prénom"/>
             <TextBox x:Name="TxtFirstName" MaxLength="20"/>
 
-            <Label Content="Téléphone"/>
+            <Label Content="Telephone"/>
             <TextBox x:Name="TxtPhone"
-                TextChanged="TxtPhone_TextChanged"
-                MaxLength="10" />
+         MaxLength="10"
+         PreviewTextInput="TxtPhone_PreviewTextInput"/>
+
 
             <Label Content="Email"/>
             <TextBox x:Name="TxtEmail"/>
