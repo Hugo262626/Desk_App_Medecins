@@ -22,7 +22,7 @@ namespace rattrapageB4.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("rattrapageB4.Data.Appointment", b =>
+            modelBuilder.Entity("rattrapageB4.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace rattrapageB4.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Doctor", b =>
+            modelBuilder.Entity("rattrapageB4.Doctor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace rattrapageB4.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Patient", b =>
+            modelBuilder.Entity("rattrapageB4.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +110,7 @@ namespace rattrapageB4.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Speciality", b =>
+            modelBuilder.Entity("rattrapageB4.Speciality", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,15 +127,15 @@ namespace rattrapageB4.Migrations
                     b.ToTable("Specialities");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Appointment", b =>
+            modelBuilder.Entity("rattrapageB4.Appointment", b =>
                 {
-                    b.HasOne("rattrapageB4.Data.Doctor", "Doctor")
+                    b.HasOne("rattrapageB4.Doctor", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("rattrapageB4.Data.Patient", "Patient")
+                    b.HasOne("rattrapageB4.Patient", "Patient")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -146,9 +146,9 @@ namespace rattrapageB4.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Doctor", b =>
+            modelBuilder.Entity("rattrapageB4.Doctor", b =>
                 {
-                    b.HasOne("rattrapageB4.Data.Speciality", "Speciality")
+                    b.HasOne("rattrapageB4.Speciality", "Speciality")
                         .WithMany("Doctors")
                         .HasForeignKey("SpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -157,17 +157,17 @@ namespace rattrapageB4.Migrations
                     b.Navigation("Speciality");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Doctor", b =>
+            modelBuilder.Entity("rattrapageB4.Doctor", b =>
                 {
                     b.Navigation("Appointments");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Patient", b =>
+            modelBuilder.Entity("rattrapageB4.Patient", b =>
                 {
                     b.Navigation("Appointments");
                 });
 
-            modelBuilder.Entity("rattrapageB4.Data.Speciality", b =>
+            modelBuilder.Entity("rattrapageB4.Speciality", b =>
                 {
                     b.Navigation("Doctors");
                 });
