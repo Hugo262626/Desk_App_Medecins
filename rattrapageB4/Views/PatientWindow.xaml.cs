@@ -34,6 +34,12 @@ namespace rattrapageB4.Views
 
         private void AddPatient_Click(object sender, RoutedEventArgs e)
         {
+            if (!AreFieldsFilled())
+            {
+                MessageBox.Show("Tous les champs sont obligatoires.");
+                return;
+            }
+
             if (TxtLastName.Text.Length > 20 || TxtFirstName.Text.Length > 20)
             {
                 MessageBox.Show("Nom et Prénom doivent contenir maximum 20 caractères.");
@@ -51,6 +57,12 @@ namespace rattrapageB4.Views
                 MessageBox.Show("Email invalide.");
                 return;
             }
+            if (!IsValidPhone(TxtPhone.Text))
+            {
+                MessageBox.Show("Numéro de téléphone invalide (10 chiffres et doit commencer par 0).");
+                return;
+            }
+
 
             using var db = new ClinicContext();
 
@@ -73,6 +85,11 @@ namespace rattrapageB4.Views
         {
             if (selected == null) return;
 
+            if (!AreFieldsFilled())
+            {
+                MessageBox.Show("Tous les champs sont obligatoires.");
+                return;
+            }
             if (TxtLastName.Text.Length > 20 || TxtFirstName.Text.Length > 20)
             {
                 MessageBox.Show("Nom et Prénom doivent contenir maximum 20 caractères.");
@@ -90,6 +107,12 @@ namespace rattrapageB4.Views
                 MessageBox.Show("Email invalide.");
                 return;
             }
+            if (!IsValidPhone(TxtPhone.Text))
+            {
+                MessageBox.Show("Numéro de téléphone invalide (10 chiffres et doit commencer par 0).");
+                return;
+            }
+
 
             using var db = new ClinicContext();
             var p = db.Patients.Find(selected.Id);
@@ -136,6 +159,20 @@ namespace rattrapageB4.Views
                 return false;
             }
         }
+        private bool IsValidPhone(string phone)
+        {
+            // Doit être exactement 10 chiffres
+            if (phone.Length != 10)
+                return false;
+
+            // Doit commencer par 0
+            if (!phone.StartsWith("0"))
+                return false;
+
+            // Doit être composé uniquement de chiffres
+            return phone.All(char.IsDigit);
+        }
+
 
         private void DeletePatient_Click(object sender, RoutedEventArgs e)
         {
@@ -156,5 +193,15 @@ namespace rattrapageB4.Views
 
             LoadPatients();
         }
+
+        private bool AreFieldsFilled()
+        {
+            return !string.IsNullOrWhiteSpace(TxtLastName.Text)
+                && !string.IsNullOrWhiteSpace(TxtFirstName.Text)
+                && !string.IsNullOrWhiteSpace(TxtPhone.Text)
+                && !string.IsNullOrWhiteSpace(TxtEmail.Text);
+        }
+
     }
 }
+
