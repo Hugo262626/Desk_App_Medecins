@@ -11,5 +11,7 @@ namespace rattrapageB4.Models
         public string Email { get; set; }
 
         public List<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public string FullName => $"{LastName} {FirstName}";
+
     }
 }

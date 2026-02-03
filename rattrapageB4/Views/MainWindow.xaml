@@ -70,8 +70,7 @@
 
             <Separator Margin="10"/>
 
-            <Button Content="Ajouter RDV" Height="40" Margin="10" Click="BtnAddAppointment_Click"/>
-            <Button Content="Modifier RDV" Height="40" Margin="10" Click="BtnEditAppointment_Click"/>
+            <Button Content="Gérer RDV" Height="40" Margin="10" Click="BtnManageAppointments_Click"/>
             <Button Content="Supprimer RDV" Height="40" Margin="10" Click="BtnDeleteAppointment_Click"/>
 
             <Separator Margin="10"/>

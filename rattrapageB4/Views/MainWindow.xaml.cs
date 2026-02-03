@@ -153,8 +153,14 @@ namespace rattrapageB4.Views
             spWindow.Owner = this;
             spWindow.ShowDialog();
         }
-        private void BtnAddAppointment_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Ouvrir formulaire RDV (ajout)...");
-        private void BtnEditAppointment_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Ouvrir formulaire RDV (édition)...");
+        private void BtnManageAppointments_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new AppointmentWindow();
+            win.Owner = this;
+            win.ShowDialog();
+            RefreshAppointments();
+        }
+
         private void BtnDeleteAppointment_Click(object sender, RoutedEventArgs e)
         {
             if (dgAppointments.SelectedItem is AppointmentListItem item)
