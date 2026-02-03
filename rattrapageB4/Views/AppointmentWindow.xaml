@@ -1,7 +1,11 @@
 ﻿<Window x:Class="rattrapageB4.Views.AppointmentWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Gestion des Rendez-vous" Height="420" Width="860"
+        Title="Gestion des Rendez-vous"   
+        Height="650"
+        Width="1100"
+        MinHeight="600"
+        MinWidth="1000"
         WindowStartupLocation="CenterOwner">
 
     <Grid Margin="10">

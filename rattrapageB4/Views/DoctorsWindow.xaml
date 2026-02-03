@@ -1,7 +1,12 @@
 ﻿<Window x:Class="rattrapageB4.Views.DoctorsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Médecins" Height="450" Width="600" WindowStartupLocation="CenterOwner">
+        Title="Médecins" 
+        Height="650"
+        Width="1100"
+        MinHeight="600"
+        MinWidth="1000"
+        WindowStartupLocation="CenterOwner">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
