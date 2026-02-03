@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.EntityFrameworkCore;
-using rattrapageB4.Models; // <- tes modèles Doctor, Patient, Appointment, Speciality
+using rattrapageB4.Models;
 
 namespace rattrapageB4.Views
 {
@@ -15,6 +15,15 @@ namespace rattrapageB4.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            var workArea = SystemParameters.WorkArea;
+
+            Width = workArea.Width * 0.95; // 95% largeur écran
+            Height = workArea.Height * 0.95; // 95% hauteur écran
+
+            Left = workArea.Left + (workArea.Width - Width) / 2;
+            Top = workArea.Top + (workArea.Height - Height) / 2;
+
             LoadFiltersAndAppointments();
         }
 
