@@ -76,7 +76,11 @@
                           Height="26"/>
 
                 <Label Content="Date" Margin="0,8,0,0"/>
-                <DatePicker x:Name="DatePicker"/>
+                <DatePicker x:Name="DatePicker"
+                            IsEnabled="True"
+                            IsTabStop="False"
+                            PreviewKeyDown="DatePicker_PreviewKeyDown"/>
+
 
                 <Label Content="Heure (HH:mm)" Margin="0,8,0,0"/>
                 <TextBox x:Name="TxtTime"
@@ -105,6 +109,10 @@
                     <Button Content="Modifier" Width="100" Margin="5" Click="UpdateAppointment_Click"/>
                     <Button Content="Supprimer" Width="100" Margin="5" Click="DeleteAppointment_Click"/>
                 </StackPanel>
+                <Button Content="Nouveau (vider)"
+                Height="30"
+                Margin="5"
+                Click="BtnClear_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

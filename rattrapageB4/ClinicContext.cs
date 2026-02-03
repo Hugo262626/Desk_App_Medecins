@@ -39,6 +39,14 @@ namespace rattrapageB4
 
             modelBuilder.Entity<Appointment>()
                 .HasIndex(a => new { a.PatientId, a.StartAt });
+            modelBuilder.Entity<Speciality>()
+                .HasIndex(s => s.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Doctor>()
+                .HasIndex(d => new { d.LastName, d.FirstName })
+                .IsUnique();
+
 
             base.OnModelCreating(modelBuilder);
         }

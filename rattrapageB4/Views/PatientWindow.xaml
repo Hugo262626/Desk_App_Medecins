@@ -33,24 +33,42 @@
         <StackPanel Grid.Column="1" Margin="20">
 
             <Label Content="Nom"/>
-            <TextBox x:Name="TxtLastName" MaxLength="20"/>
+            <TextBox x:Name="TxtLastName"
+                     MaxLength="20"
+                     PreviewTextInput="Name_PreviewTextInput"
+                     DataObject.Pasting="Name_Pasting"/>
 
             <Label Content="Prénom"/>
-            <TextBox x:Name="TxtFirstName" MaxLength="20"/>
+            <TextBox x:Name="TxtFirstName"
+                     MaxLength="20"
+                     PreviewTextInput="Name_PreviewTextInput"
+                     DataObject.Pasting="Name_Pasting"/>
 
-            <Label Content="Telephone"/>
+            <Label Content="Téléphone"/>
             <TextBox x:Name="TxtPhone"
-         MaxLength="10"
-         PreviewTextInput="TxtPhone_PreviewTextInput"/>
-
+                     MaxLength="10"
+                     PreviewTextInput="TxtPhone_PreviewTextInput"/>
 
             <Label Content="Email"/>
-            <TextBox x:Name="TxtEmail"/>
+            <TextBox x:Name="TxtEmail"
+                     MaxLength="35"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Ajouter" Width="100" Margin="5" Click="AddPatient_Click"/>
-                <Button Content="Modifier" Width="100" Margin="5" Click="UpdatePatient_Click"/>
-                <Button Content="Supprimer" Width="100" Margin="5" Click="DeletePatient_Click"/>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="10">
+                <Button Content="Ajouter"
+                        Width="100"
+                        Margin="5"
+                        Click="AddPatient_Click"/>
+                <Button Content="Modifier"
+                        Width="100"
+                        Margin="5"
+                        Click="UpdatePatient_Click"/>
+                <Button Content="Supprimer"
+                        Width="100"
+                        Margin="5"
+                        Click="DeletePatient_Click"/>
             </StackPanel>
 
         </StackPanel>

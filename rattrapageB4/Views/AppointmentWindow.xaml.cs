@@ -177,7 +177,7 @@ namespace rattrapageB4.Views
                 return false;
             }
 
-            // Heure stricte 24h : HH:mm
+            // Heure 24h HH:mm
             var timeText = TxtTime.Text.Trim();
             if (!DateTime.TryParseExact(timeText, "HH:mm",
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedTime))
@@ -234,5 +234,14 @@ namespace rattrapageB4.Views
             DurationCombo.SelectedIndex = 2; // 30 min (si ordre inchangé)
             TxtNotes.Text = "";
         }
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearForm();
+        }
+        private void DatePicker_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = true; // bloque toute saisie clavier
+        }
+
     }
 }
