@@ -1,7 +1,7 @@
 # Desk App Médecins — Prise et gestion de rendez-vous (application desktop)
 
 Application **desktop** destinée à un usage “secrétariat médical” : création et gestion de **patients**, **médecins** et **rendez-vous**, avec des écrans de consultation / recherche.  
-> Projet en cours (non terminé). :contentReference[oaicite:0]{index=0}
+> Projet en cours.
 
 ---
 
