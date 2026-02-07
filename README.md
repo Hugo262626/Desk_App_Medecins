@@ -32,12 +32,12 @@ Centraliser la gestion quotidienne d’un cabinet (ou d’un centre) médical :
 
 ## Stack technique
 
-- **C# / .NET** (application desktop) :contentReference[oaicite:3]{index=3}
-- framework UI (WPF/WinForms) et couche data (Entity Framework)
+- **C# / .NET**
+- framework UI (WPF/WinForms -  application desktop) et couche data (Entity Framework)
 
 ---
 
 ## Prérequis techniques
 
-- **.NET SDK** compatible avec le projet (voir le `TargetFramework` dans les `.csproj`)
-- Un moteur de base de données (ex : MySQL)
+- **.NET SDK**
+- Un moteur de base de données (SGBDR - ex : MySQL)
