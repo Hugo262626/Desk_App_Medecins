@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using rattrapageB4.Models;
 
@@ -12,26 +15,102 @@ namespace rattrapageB4.Views
     {
         private List<AppointmentListItem> currentList = new List<AppointmentListItem>();
 
+        private bool _isAdmin = false;
+
+        // mot de passe hash
+        private const string AdminPasswordSha256 = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+
         public MainWindow()
         {
             InitializeComponent();
 
             var workArea = SystemParameters.WorkArea;
 
-            Width = workArea.Width * 0.95; // 95% largeur écran
-            Height = workArea.Height * 0.95; // 95% hauteur écran
+            Width = workArea.Width * 0.95;   
+            Height = workArea.Height * 0.95;
 
             Left = workArea.Left + (workArea.Width - Width) / 2;
             Top = workArea.Top + (workArea.Height - Height) / 2;
 
+            SetAdminMode(false);
+
             LoadFiltersAndAppointments();
         }
+
+        // ===== ADMIN =====
+
+        private void SetAdminMode(bool enabled)
+        {
+            _isAdmin = enabled;
+
+            // boutons admin only (définis dans XAML)
+            btnDoctors.IsEnabled = enabled;
+            btnSpecialities.IsEnabled = enabled;
+        }
+
+        private static bool IsAdminComboPressed(KeyEventArgs e)
+        {
+            return (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift))
+                   == (ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift)
+                   && e.Key == Key.A;
+        }
+
+        private static bool IsAdminLogoutComboPressed(KeyEventArgs e)
+        {
+            return (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift))
+                   == (ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift)
+                   && e.Key == Key.L;
+        }
+
+        private static string Sha256(string input)
+        {
+            using var sha = SHA256.Create();
+            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+            var sb = new StringBuilder(bytes.Length * 2);
+            foreach (var b in bytes) sb.Append(b.ToString("x2"));
+            return sb.ToString();
+        }
+
+        // Déclenché par PreviewKeyDown dans XAML
+        private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Logout admin (option)
+            if (IsAdminLogoutComboPressed(e))
+            {
+                e.Handled = true;
+                SetAdminMode(false);
+                MessageBox.Show("Mode administrateur désactivé.");
+                return;
+            }
+
+            // Login admin
+            if (!IsAdminComboPressed(e))
+                return;
+
+            e.Handled = true;
+
+            var dlg = new AdminPasswordWindow { Owner = this };
+            if (dlg.ShowDialog() != true) return;
+
+            var enteredHash = Sha256(dlg.Password);
+
+            if (enteredHash == AdminPasswordSha256)
+            {
+                SetAdminMode(true);
+                MessageBox.Show("Mode administrateur activé.");
+            }
+            else
+            {
+                MessageBox.Show("Mot de passe incorrect.");
+            }
+        }
+
+        // ===== DATA =====
 
         private void LoadFiltersAndAppointments()
         {
             using var db = new ClinicContext();
 
-            // Médecins : projection FullName
             var doctors = db.Doctors
                             .OrderBy(d => d.LastName)
                             .Select(d => new { d.Id, FullName = (d.LastName ?? "") + " " + (d.FirstName ?? "") })
@@ -39,7 +118,6 @@ namespace rattrapageB4.Views
             cboDoctor.ItemsSource = doctors;
             cboDoctor.SelectedIndex = -1;
 
-            // Patients : projection FullName
             var patients = db.Patients
                              .OrderBy(p => p.LastName)
                              .Select(p => new { p.Id, FullName = (p.LastName ?? "") + " " + (p.FirstName ?? "") })
@@ -77,7 +155,8 @@ namespace rattrapageB4.Views
             dgAppointments.ItemsSource = currentList;
         }
 
-        // FILTRAGE
+        // ===== FILTRAGE =====
+
         private void BtnFilter_Click(object sender, RoutedEventArgs e)
         {
             var filtered = currentList.AsEnumerable();
@@ -134,7 +213,7 @@ namespace rattrapageB4.Views
             dgAppointments.ItemsSource = past;
         }
 
-        private void DgAppointments_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DgAppointments_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (dgAppointments.SelectedItem is AppointmentListItem item)
             {
@@ -144,24 +223,29 @@ namespace rattrapageB4.Views
             }
         }
 
-        // BOUTONS CRUD (placeholders)
+        // ===== BOUTONS =====
+
         private void BtnPatients_Click(object sender, RoutedEventArgs e)
         {
-            var win = new Views.PatientWindow();
+            var win = new PatientWindow();
+            win.Owner = this;
             win.ShowDialog();
         }
+
         private void BtnDoctors_Click(object sender, RoutedEventArgs e)
         {
             var doctorsWindow = new DoctorsWindow();
-            doctorsWindow.Owner = this; // optionnel, pour que la fenêtre soit “attachée” à la MainWindow
-            doctorsWindow.ShowDialog(); // ShowDialog() bloque la MainWindow tant que DoctorsWindow est ouverte
+            doctorsWindow.Owner = this;
+            doctorsWindow.ShowDialog();
         }
+
         private void BtnSpecialities_Click(object sender, RoutedEventArgs e)
         {
             var spWindow = new SpecialitiesWindow();
             spWindow.Owner = this;
             spWindow.ShowDialog();
         }
+
         private void BtnManageAppointments_Click(object sender, RoutedEventArgs e)
         {
             var win = new AppointmentWindow();
@@ -190,7 +274,8 @@ namespace rattrapageB4.Views
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e) => LoadFiltersAndAppointments();
 
-        // Classe interne pour le DataGrid
+        // ===== CLASSE LISTE =====
+
         private class AppointmentListItem
         {
             public int Id { get; set; }

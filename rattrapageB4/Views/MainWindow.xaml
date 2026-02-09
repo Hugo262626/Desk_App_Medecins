@@ -4,24 +4,23 @@
         Title="Clinic - Agenda"
         WindowStartupLocation="CenterScreen"
         MinWidth="900"
-        MinHeight="550">
+        MinHeight="550"
+        PreviewKeyDown="MainWindow_PreviewKeyDown">
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <!-- RDV -->
             <ColumnDefinition Width="250"/>
-            <!-- boutons -->
         </Grid.ColumnDefinitions>
 
         <!-- Partie gauche : filtres + DataGrid RDV -->
         <DockPanel Grid.Column="0" Margin="0,0,10,0">
+
             <!-- Filtres -->
             <ScrollViewer DockPanel.Dock="Top"
-              VerticalScrollBarVisibility="Disabled"
-              HorizontalScrollBarVisibility="Auto"
-              Margin="0,0,0,10">
-                <!-- WrapPanel = passe à la ligne si pas assez de place -->
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Auto"
+                          Margin="0,0,0,10">
                 <WrapPanel Orientation="Horizontal">
 
                     <StackPanel Margin="0,0,10,10">
@@ -53,15 +52,13 @@
                 </WrapPanel>
             </ScrollViewer>
 
-
             <!-- DataGrid -->
             <DataGrid x:Name="dgAppointments"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserAddRows="False"
                       MouseDoubleClick="DgAppointments_MouseDoubleClick"
-                      SelectionMode="Single"
-                      DockPanel.Dock="Top">
+                      SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Binding="{Binding StartAt, StringFormat=d}" Width="90"/>
                     <DataGridTextColumn Header="Heure début" Binding="{Binding StartAt, StringFormat=HH\\:mm}" Width="80"/>
@@ -73,22 +70,32 @@
             </DataGrid>
         </DockPanel>
 
-        <!-- Partie droite : boutons CRUD -->
-        <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-            <TextBlock Text="Actions" FontSize="16" FontWeight="Bold" Margin="10"/>
-            <Button Content="Patients" Height="40" Margin="10" Click="BtnPatients_Click"/>
-            <Button Content="Médecins" Height="40" Margin="10" Click="BtnDoctors_Click"/>
-            <Button Content="Spécialités" Height="40" Margin="10" Click="BtnSpecialities_Click"/>
+        <!-- Partie droite : menu actions (scrollable recommandé) -->
+        <ScrollViewer Grid.Column="1"
+                      VerticalAlignment="Stretch"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <TextBlock Text="Actions" FontSize="16" FontWeight="Bold" Margin="10"/>
 
-            <Separator Margin="10"/>
+                <Button x:Name="btnPatients" Content="Patients" Height="40" Margin="10" Click="BtnPatients_Click"/>
 
-            <Button Content="Gérer RDV" Height="40" Margin="10" Click="BtnManageAppointments_Click"/>
-            <Button Content="Supprimer RDV" Height="40" Margin="10" Click="BtnDeleteAppointment_Click"/>
+                <!-- ADMIN ONLY -->
+                <Button x:Name="btnDoctors" Content="Médecins" Height="40" Margin="10"
+                        Click="BtnDoctors_Click" IsEnabled="False"/>
+                <Button x:Name="btnSpecialities" Content="Spécialités" Height="40" Margin="10"
+                        Click="BtnSpecialities_Click" IsEnabled="False"/>
 
-            <Separator Margin="10"/>
+                <Separator Margin="10"/>
 
-            <Button Content="Refresh" Height="32" Margin="10" Click="BtnRefresh_Click"/>
-            <TextBlock Text="(Double-clic sur un RDV pour voir détails)" Margin="10" TextWrapping="Wrap"/>
-        </StackPanel>
+                <Button Content="Gérer RDV" Height="40" Margin="10" Click="BtnManageAppointments_Click"/>
+                <Button Content="Supprimer RDV" Height="40" Margin="10" Click="BtnDeleteAppointment_Click"/>
+
+                <Separator Margin="10"/>
+
+                <Button Content="Refresh" Height="32" Margin="10" Click="BtnRefresh_Click"/>
+                <TextBlock Text="(Double-clic sur un RDV pour voir détails)" Margin="10" TextWrapping="Wrap"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
