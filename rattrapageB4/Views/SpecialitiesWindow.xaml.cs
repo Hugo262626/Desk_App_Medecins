@@ -61,6 +61,5 @@ namespace rattrapageB4.Views
                 }
             }
         }
-
     }
 }
