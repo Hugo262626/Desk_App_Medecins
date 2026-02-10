@@ -105,6 +105,26 @@ namespace rattrapageB4.Views
             }
         }
 
+        private void ReloadData()
+        {
+            using var db = new ClinicContext();
+
+            cboDoctor.ItemsSource = db.Doctors
+                .OrderBy(d => d.LastName)
+                .Select(d => new { d.Id, FullName = d.LastName + " " + d.FirstName })
+                .ToList();
+
+            cboPatient.ItemsSource = db.Patients
+                .OrderBy(p => p.LastName)
+                .Select(p => new { p.Id, FullName = p.LastName + " " + p.FirstName })
+                .ToList();
+
+            cboDoctor.SelectedIndex = -1;
+            cboPatient.SelectedIndex = -1;
+
+            RefreshAppointments();
+        }
+
         // ===== DATA =====
 
         private void LoadFiltersAndAppointments()
@@ -230,29 +250,40 @@ namespace rattrapageB4.Views
             var win = new PatientWindow();
             win.Owner = this;
             win.ShowDialog();
+
+            ReloadData();
         }
+
 
         private void BtnDoctors_Click(object sender, RoutedEventArgs e)
         {
-            var doctorsWindow = new DoctorsWindow();
-            doctorsWindow.Owner = this;
-            doctorsWindow.ShowDialog();
+            var win = new DoctorsWindow();
+            win.Owner = this;
+            win.ShowDialog();
+
+            ReloadData(); 
         }
+
 
         private void BtnSpecialities_Click(object sender, RoutedEventArgs e)
         {
-            var spWindow = new SpecialitiesWindow();
-            spWindow.Owner = this;
-            spWindow.ShowDialog();
+            var win = new SpecialitiesWindow();
+            win.Owner = this;
+            win.ShowDialog();
+
+            ReloadData(); 
         }
+
 
         private void BtnManageAppointments_Click(object sender, RoutedEventArgs e)
         {
             var win = new AppointmentWindow();
             win.Owner = this;
             win.ShowDialog();
-            RefreshAppointments();
+
+            ReloadData();
         }
+
 
         private void BtnDeleteAppointment_Click(object sender, RoutedEventArgs e)
         {

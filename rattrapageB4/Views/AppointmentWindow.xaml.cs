@@ -89,6 +89,9 @@ namespace rattrapageB4.Views
                 EndAt = end,
                 Notes = notes
             });
+            if (!ValidateNotInPast(start, end))
+                return;
+
 
             db.SaveChanges();
             LoadAppointments();
@@ -117,6 +120,9 @@ namespace rattrapageB4.Views
             appt.StartAt = start;
             appt.EndAt = end;
             appt.Notes = notes;
+            if (!ValidateNotInPast(start, end))
+                return;
+
 
             db.SaveChanges();
             LoadAppointments();
@@ -219,6 +225,22 @@ namespace rattrapageB4.Views
                 a.StartAt < end &&
                 start < a.EndAt
             );
+        }
+        private bool ValidateNotInPast(DateTime startAt, DateTime endAt)
+        {
+            if (startAt < DateTime.Now)
+            {
+                MessageBox.Show("Impossible d'enregistrer un rendez-vous dans le passé.");
+                return false;
+            }
+
+            if (endAt <= startAt)
+            {
+                MessageBox.Show("L'heure de fin doit être après l'heure de début.");
+                return false;
+            }
+
+            return true;
         }
 
         private void ClearForm()
