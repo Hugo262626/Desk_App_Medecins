@@ -230,21 +230,53 @@ namespace rattrapageB4.Views
             if (selected == null) return;
 
             using var db = new ClinicContext();
+
+            // Vérifie si le patient a au moins un RDV
+            bool hasAppointments = db.Appointments.Any(a => a.PatientId == selected.Id);
+
+            if (hasAppointments)
+            {
+                MessageBox.Show(
+                    "Impossible de supprimer ce patient : il a déjà un rendez-vous.",
+                    "Suppression refusée",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
             var p = db.Patients.Find(selected.Id);
             if (p == null) return;
 
+            if (MessageBox.Show(
+                $"Supprimer le patient {p.LastName} {p.FirstName} ?",
+                "Confirmation",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            db.Patients.Remove(p);
+
             try
             {
-                db.Patients.Remove(p);
                 db.SaveChanges();
+                selected = null;
+                LoadPatients();
+                TxtLastName.Text = "";
+                TxtFirstName.Text = "";
+                TxtPhone.Text = "";
+                TxtEmail.Text = "";
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Impossible de supprimer : ce patient a déjà un rendez-vous !");
+                // Au cas où la DB cascade/constraint/erreur quelconque
+                MessageBox.Show(
+                    "Suppression impossible. Détails: " + ex.Message,
+                    "Erreur",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
-
-            LoadPatients();
         }
+
 
         private bool AreFieldsFilled()
         {
